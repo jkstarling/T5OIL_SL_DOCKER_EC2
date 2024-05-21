@@ -4,6 +4,6 @@ pandas
 numpy
 matplotlib
 plotly
-st_aggrid
-plotly.express
-dash_ag_grid
+streamlit-aggrid
+plotly-express
+dash-ag-grid
