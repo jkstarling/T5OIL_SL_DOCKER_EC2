@@ -74,7 +74,11 @@ docker rmi entbappy/stapp:latest
 docker pull entbappy/stapp
 ```
 
+code removed from example here: https://docs.streamlit.io/deploy/tutorials/docker#check-network-port-accessibility
 
+#3.93.198.219"]
+
+# HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
 
 #### OLD CODE ####
