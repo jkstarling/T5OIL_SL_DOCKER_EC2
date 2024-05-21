@@ -23,7 +23,7 @@ newgrp docker
 ```
 
 ```bash
-git clone "your-project"
+git clone https://github.com/jkstarling/T5OIL_SL_DOCKER_EC2.git
 ```
 
 ```bash
