@@ -22,13 +22,21 @@ sudo usermod -aG docker ubuntu
 newgrp docker
 ```
 
+(may require sudo)
 ```bash
+sudo mkdir /app
+
+cd /app
+
 git clone https://github.com/jkstarling/T5OIL_SL_DOCKER_EC2.git
+
+cd /T5OIL_SL_DOCKER_EC2
+
+docker build -t streamlit .
+
+
 ```
 
-```bash
-docker build -t entbappy/stapp:latest . 
-```
 
 ```bash
 docker images -a  
