@@ -24,8 +24,11 @@ cwdir = os.path.dirname(__file__)
 cwdirup1 = os.path.dirname(cwdir)
 # st.write(cwdir)
 controlmap = pd.read_excel(cwdir + '\control_map.xlsx', index_col=None)
-extra = pd.read_csv(cwdirup1 + '\\t5_extra_data.csv', index_col=None)
-workdays = pd.read_csv(cwdirup1 + '\\t5_workdays.csv', index_col=None)
+try: extra = pd.read_csv(cwdirup1 + '\\t5_extra_data.csv', index_col=None)
+except: extra = pd.read_csv(cwdirup1 + '/t5_extra_data.csv', index_col=None)
+
+try: workdays = pd.read_csv(cwdirup1 + '\\t5_workdays.csv', index_col=None)
+except: workdays = pd.read_csv(cwdirup1 + '/t5_workdays.csv', index_col=None)
 
 locations = [(1402,'1402 - Ten Mile'), 
             (1403, '1403 - Caldwell'), 
