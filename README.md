@@ -81,6 +81,12 @@ code removed from example here: https://docs.streamlit.io/deploy/tutorials/docke
 # HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
 
+
+
+
+
+
+
 #### OLD CODE ####
 
 ```bash
@@ -128,7 +134,7 @@ pipx install streamlit
 
 Or if that doesn't work, try to install venv and start a virtual environment. 
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate
 pip install streamlit
 ```

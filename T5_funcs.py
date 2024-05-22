@@ -4,6 +4,7 @@ Helper functions to create, add entries, etc. for T5 Oil
 import pymysql
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 def make_connection(host,user,port,password,databasename):
     connection = pymysql.connect(host=host,user=user,port=port, 
@@ -67,14 +68,14 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     # st.write(work_pivot)
 
     ### 1 CPD
-    pivot_table.loc[(1, 'CPD'),:] = ext_sum.loc['CarsServ', :] / work_pivot.loc['workdays', :] 
+    pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ', :] / work_pivot.loc['workdays', :] ,1)
 
     ### 11  Total Income	(sum all 4000s)
     summed_values = filter_add_accounts(pivot_table, 4000, 4999)
-    pivot_table.loc[(11, 'Revenue'), :] = summed_values
+    pivot_table.loc[(11, 'Revenue'), :] = np.round(summed_values,0)
 
      ### 2 ARO
-    pivot_table.loc[(2, 'ARO'),:] = pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['CarsServ', :]
+    pivot_table.loc[(2, 'ARO'),:] = np.round(pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['CarsServ', :],0)
 
     ### 5998 Total Cost of Goods Sold	(sum all 5000s)
     summed_values = filter_add_accounts(pivot_table, 5000, 5998)
@@ -82,7 +83,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ###  12  Gross Profit	5998  minus 11
     top = pivot_table.loc[(11, 'Revenue'), :]
     bot = pivot_table.loc[(5998, 'Total Cost of Goods Sold'), :]
-    pivot_table.loc[(12, 'Gross Profit'), :] = top - bot
+    pivot_table.loc[(12, 'Gross Profit'), :] = np.round(top - bot,2)
 
     ### 8990  Total Expenses	(add all 6000 - 8980(inclusive))
     summed_values = filter_add_accounts(pivot_table, 6000, 8990)
@@ -105,12 +106,12 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ###  9990    Net Other Income	 9199 minus  9980  
     top = pivot_table.loc[(9199, 'Total Other Income'), :]
     bot = pivot_table.loc[(9980, 'Total Other Expenses'), :]
-    pivot_table.loc[(9990, 'Net Other Income'), :] = top - bot
+    pivot_table.loc[(9990, 'Net Other Income'), :] = np.round(top - bot,0)
 
     ###  27   Net Income	           9990 plus 8999
     top = pivot_table.loc[(9990, 'Net Other Income'), :]
     bot = pivot_table.loc[(8999, 'Net Operating Income'), :]
-    pivot_table.loc[(27, 'Net Profit'), :] = top + bot
+    pivot_table.loc[(27, 'Net Profit'), :] = np.round(top + bot,0)
 
     # remove all 0.0s and replace with NaNs
     pivot_table.replace(0.0, np.nan, inplace=True)
@@ -125,7 +126,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     # 25	4 Wall Profit	Gross Profit 5999 minus 10005
     top = pivot_table.loc[(12, 'Gross Profit'), :]
     bot = pivot_table.loc[(10005, '4 Wall Expenses'), :]
-    pivot_table.loc[(25, '4-Wall EBITDA'), :] = top - bot
+    pivot_table.loc[(25, '4-Wall EBITDA'), :] = np.round(top - bot,0)
 
     # 10011	Labor	(add all 6000s)
     summed_values = filter_add_accounts(pivot_table, 6000, 6999)
@@ -160,69 +161,71 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     # 10021	Labor %	10011 divide by  11  (11, 'Revenue')
     top = pivot_table.loc[(10011, 'Labor'), :]
     bot = pivot_table.loc[(11, 'Revenue'), :]
-    pivot_table.loc[(21, 'Labor %'), :] = top / bot
+    pivot_table.loc[(21, 'Labor %'), :] = np.round(top / bot,2)
 
     # 22	Controllable %	10012 divide by  11  (11, 'Revenue')
     top = pivot_table.loc[(10012, 'Controllable'), :]
     bot = pivot_table.loc[(11, 'Revenue'), :]
-    pivot_table.loc[(22, 'Controllable %'), :] = top / bot
+    pivot_table.loc[(22, 'Controllable %'), :] = np.round(top / bot,2)
 
     # 23	Uncontrollable %	10013 divide by  11  (11, 'Revenue')
     top = pivot_table.loc[(10013, 'Uncontrollable'), :]
     bot = pivot_table.loc[(11, 'Revenue'), :]
-    pivot_table.loc[(23, 'Uncontrollable %'), :] = top / bot
+    pivot_table.loc[(23, 'Uncontrollable %'), :] = np.round(top / bot,2)
 
     #26 4-Wall FCF
     top = pivot_table.loc[(8999, 'Net Operating Income'),:]
     bot = pivot_table.loc[(9230, '9230 Interest Expense'),:]
-    pivot_table.loc[(26, '4-Wall FCF'), :] = top / bot
+    pivot_table.loc[(26, '4-Wall FCF'), :] = np.round(top - bot,2)
 
     #31 Cash
     summed_values = filter_add_accounts(pivot_table, 1000, 1099)
-    pivot_table.loc[(31, 'Cash'), :] = summed_values
+    pivot_table.loc[(31, 'Cash'), :] = np.round(summed_values,0)
 
     #41 Gross Profit %
     top = pivot_table.loc[(12, 'Gross Profit'),:]
     bot = pivot_table.loc[(11, 'Revenue'),:]
-    pivot_table.loc[(41, 'Gross Profit %'), :] = top / bot
+    pivot_table.loc[(41, 'Gross Profit %'), :] = np.round(top / bot, 2)
 
     #42 4-WALL EBITDA %
     top = pivot_table.loc[(25, '4-Wall EBITDA'),:]
     bot = pivot_table.loc[(11, 'Revenue'),:]
-    pivot_table.loc[(42, '4-Wall EBITDA %'), :] = top / bot
+    pivot_table.loc[(42, '4-Wall EBITDA %'), :] = np.round(top / bot, 2)
 
     #43 4-WALL FCF %
     top = pivot_table.loc[(26, '4-Wall FCF'),:]
     bot = pivot_table.loc[(11, 'Revenue'),:]
-    pivot_table.loc[(43, '4-Wall FCF %'), :] = top / bot
+    pivot_table.loc[(43, '4-Wall FCF %'), :] = np.round(top / bot, 2)
 
     #44 4-WALL FCF %
     top = pivot_table.loc[(27, 'Net Profit'),:]
     bot = pivot_table.loc[(11, 'Revenue'),:]
-    pivot_table.loc[(44, 'Net Profit %'), :] = top / bot
+    pivot_table.loc[(44, 'Net Profit %'), :] = np.round(top / bot, 2)
 
     #51 LHPC
-    pivot_table.loc[(51, 'LHPC'),:] = ext_sum.loc['CarsServ', :] / ext_sum.loc['EmpHours', :]
+    pivot_table.loc[(51, 'LHPC'),:] = np.round(ext_sum.loc['EmpHours', :] / ext_sum.loc['CarsServ', :],2)
     #52 Revenue Per Employee Hours Worked
-    pivot_table.loc[(52, 'Revenue Per Employee Hours Worked'),:] = pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['EmpHours', :]
+    pivot_table.loc[(52, 'Revenue Per Employee Hours Worked'),:] = np.round(pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['EmpHours', :],2)
 
     #61 P-Mix %
-    pivot_table.loc[(61, 'P-Mix %'),:] = ext_avg.loc['Pmix_perc', :]
+    pivot_table.loc[(61, 'P-Mix %'),:] = np.round(ext_avg.loc['Pmix_perc', :],2)
     #62 Big 5 %
-    pivot_table.loc[(62, 'Big 5 %'),:] = ext_avg.loc['Big5_perc', :]
+    pivot_table.loc[(62, 'Big 5 %'),:] = np.round(ext_avg.loc['Big5_perc', :],2)
     #63 Bay Times
-    pivot_table.loc[(63, 'Bay Times'),:] = ext_avg.loc['BayTimes', :]
+    pivot_table.loc[(63, 'Bay Times'),:] = np.round(ext_avg.loc['BayTimes', :],2)
     #64 Discount %
     summed_values = filter_add_accounts(pivot_table, 4099, 4899)
-    pivot_table.loc[(64, 'Discount %'),:] = pivot_table.loc[(4900, '4900 Sales - Discounts'), :] / summed_values 
+    pivot_table.loc[(64, 'Discount %'),:] = np.round(pivot_table.loc[(4900, '4900 Sales - Discounts'), :] / summed_values,2)
     
     #71 # of Cars Serviced
     pivot_table.loc[(71, '# of Cars Serviced'),:] = ext_sum.loc['CarsServ', :]
     #72 Gross Profit Per Car
-    pivot_table.loc[(72, 'Gross Profit Per Car'),:] = pivot_table.loc[(12, 'Gross Profit'), :] / ext_sum.loc['CarsServ', :]
+    pivot_table.loc[(72, 'Gross Profit Per Car'),:] = np.round(pivot_table.loc[(12, 'Gross Profit'), :] / ext_sum.loc['CarsServ', :],2)
     #73 4-Wall EBITDA Per Car
-    pivot_table.loc[(73, '4-Wall EBITDA Per Car'),:] = pivot_table.loc[(25, '4-Wall EBITDA'), :] / ext_sum.loc['CarsServ', :]
+    pivot_table.loc[(73, '4-Wall EBITDA Per Car'),:] = np.round(pivot_table.loc[(25, '4-Wall EBITDA'), :] / ext_sum.loc['CarsServ', :],2)
     
+    pivot_table.replace(0.0, np.nan, inplace=True)
+
     # make blank rows
     for i in [10, 20, 24, 30, 40, 50, 60, 70]:
         pivot_table.loc[(i, ''), :] = [None] * len(pivot_table.columns)
@@ -230,6 +233,49 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     final_df = pivot_table.loc[pivot_table.index.get_level_values(0) < 100] 
     # Sort the index
     final_df.sort_index(inplace=True)
+
+    # create the LTM and "last three months vs prev 3 months"
+    last12months = final_df.iloc[:, -12:]
+    last3months = final_df.iloc[:, -3:]
+    prev3months = final_df.iloc[:, -6:-3]
+    #indices for sum/avg rows
+    ind_sum = [(11, 'Revenue'),    (12, 'Gross Profit'), (25, '4-Wall EBITDA'), 
+               (26, '4-Wall FCF'), (27, 'Net Profit'),   (71, '# of Cars Serviced')    ]
+    ind_avg = [( 1, 'CPD'),            ( 2, 'ARO'),              (21, 'Labor %'),
+                (22, 'Controllable %'),(23, 'Uncontrollable %'), (31, 'Cash'),
+                (41, 'Gross Profit %'),(42, '4-Wall EBITDA %'),  (43, '4-Wall FCF %'),
+                (44, 'Net Profit %'),  (51, 'LHPC'),             (52, 'Revenue Per Employee Hours Worked'),
+                (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
+                (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
+
+    last12sum = last12months.loc[ind_sum,:].sum(axis=1)
+    last12avg = last12months.loc[ind_avg,:].mean(axis=1)
+    last12sum.name = 'LTM'
+    last12avg.name = 'LTM'
+    final_df.loc[ind_sum,'LTM'] = last12sum
+    final_df.loc[ind_avg,'LTM'] = last12avg
+
+    last3sum = last3months.loc[ind_sum,:].sum(axis=1)
+    last3avg = last3months.loc[ind_avg,:].mean(axis=1)
+    prev3sum = prev3months.loc[ind_sum,:].sum(axis=1)
+    prev3avg = prev3months.loc[ind_avg,:].mean(axis=1)
+    diff3sum = last3sum - prev3sum
+    diff3avg =  last3avg - prev3avg
+    diff3sum.name = 'L3vP3 $'
+    diff3avg.name = 'L3vP3 $'
+    final_df.loc[ind_sum,'L3vP3 $'] = diff3sum
+    final_df.loc[ind_avg,'L3vP3 $'] = diff3avg
+
+    try: d3sum_perc = diff3sum / prev3sum
+    except: d3sum_perc = 0
+    try: d3avg_perc = diff3avg / prev3avg
+    except: d3avg_perc = 0
+    d3sum_perc.name = 'L3vP3 %'
+    d3avg_perc.name = 'L3vP3 %'
+    final_df.loc[ind_sum,'L3vP3 %'] = d3sum_perc
+    final_df.loc[ind_avg,'L3vP3 %'] = d3avg_perc
+
+    # st.write(d3sum_perc, d3avg_perc)
 
     return(final_df)
 
