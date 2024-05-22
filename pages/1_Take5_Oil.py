@@ -23,7 +23,9 @@ st.set_page_config(layout="wide")
 cwdir = os.path.dirname(__file__)
 cwdirup1 = os.path.dirname(cwdir)
 # st.write(cwdir)
-controlmap = pd.read_excel(cwdir + '\control_map.xlsx', index_col=None)
+try: controlmap = pd.read_excel(cwdir + '\control_map.xlsx', index_col=None)
+except: controlmap = pd.read_excel(cwdir + '/control_map.xlsx', index_col=None)
+
 try: extra = pd.read_csv(cwdirup1 + '\\t5_extra_data.csv', index_col=None)
 except: extra = pd.read_csv(cwdirup1 + '/t5_extra_data.csv', index_col=None)
 
