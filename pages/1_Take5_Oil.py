@@ -339,3 +339,22 @@ st.write(df_loc)
 #         tile.write('(placeholder budget)')
 
 # # You can continue to fill other rows in a similar manner
+
+# Explanation:
+# Data Initialization:
+
+# last2mos DataFrame is created with sample data. Replace this with your actual data.
+# ind list is defined with your provided values.
+# Grid Creation:
+
+# A dictionary grid is initialized to store the columns for each row.
+# Loop through the number of rows to create the columns using st.columns(num_cols).
+# Populating the Grid:
+
+# The first row (grid[0]) is filled with data from the ind list.
+# The second row (grid[1]) is filled with data from the last2mos DataFrame along with additional information.
+# Modular Approach:
+
+# The code is structured in a modular way, making it easy to add more rows and populate them with data as needed.
+# This code will create a grid of containers in Streamlit, with the first row displaying the ind values and the second row displaying data 
+# from the last2mos DataFrame. You can further extend this approach to fill other rows and columns with the desired data.
