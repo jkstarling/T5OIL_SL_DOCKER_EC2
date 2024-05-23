@@ -5,6 +5,8 @@ import pymysql
 import streamlit as st
 import pandas as pd
 import numpy as np
+import hmac
+import time
 
 def make_connection(host,user,port,password,databasename):
     connection = pymysql.connect(host=host,user=user,port=port, 
@@ -279,3 +281,66 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
 
     return(final_df)
 
+
+
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["pagepassword"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the password is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
+
+
+# # Set the timeout period (in seconds)
+# TIMEOUT = 60 * 5  # 5 minutes
+
+# # Function to check if the user is authenticated
+# def is_authenticated():
+#     if 'authenticated' not in st.session_state or not st.session_state.authenticated:
+#         return False
+#     if 'timestamp' not in st.session_state:
+#         return False
+#     current_time = time.time()
+#     if current_time - st.session_state.timestamp > TIMEOUT:
+#         st.session_state.authenticated = False
+#         return False
+#     return True
+
+# # Function to handle the authentication
+# def authenticate(password_input):
+#     correct_password = st.secrets["pagepassword"] #"your_password"  # Replace with your actual password
+#     if password_input == correct_password:
+#         st.session_state.authenticated = True
+#         st.session_state.timestamp = time.time()
+#     else:
+#         st.session_state.authenticated = False
+#         st.error("Incorrect password")
+
+# # Main app logic
+# if 'authenticated' not in st.session_state:
+#     st.session_state.authenticated = False
+
+# if is_authenticated():
+#     st.success("You are authenticated!")
+#     st.write("Your secured content goes here...")
+# else:
+#     st.warning("Please enter the password to access the content.")
+#     password_input = st.text_input("Password", type="password")
+#     if st.button("Submit"):
+#         authenticate(password_input)

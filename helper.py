@@ -27,6 +27,9 @@ def perc_format(val):
 def numb_format(val):
     return f'{int(val):,}'
 
+def format_two_decimals(x):
+    return f"{x:.2f}"
+
 def perc_print(mymetric, mynumb, myperc):
     st.write(mymetric + arrow_format(myperc))    
     st.markdown(f"""<p style='font-size:30px;'>{perc_format(mynumb)}</p>""", unsafe_allow_html=True)

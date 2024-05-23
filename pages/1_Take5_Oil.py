@@ -15,9 +15,30 @@ import dash_ag_grid as dag
 from st_aggrid import AgGrid
 from helper import *
 from sklearn.linear_model import LinearRegression
-
+import hmac
 
 st.set_page_config(layout="wide")
+
+# if not T5f.check_password():
+    # st.stop()  # Do not continue if check_password is not True.
+
+# # Main Streamlit app starts here
+# st.write("Here goes your normal Streamlit app...")
+# st.button("Click me")
+
+# Main app logic
+# if 'authenticated' not in st.session_state:
+#     st.session_state.authenticated = False
+
+# if T5f.is_authenticated():
+#     st.success("You are authenticated!")
+#     st.write("Your secured content goes here...")
+# else:
+#     st.warning("Please enter the password to access the content.")
+#     password_input = st.text_input("Password", type="password")
+#     if st.button("Submit"):
+#         T5f.authenticate(password_input)
+
 
 # Get the directory of the current script
 cwdir = os.path.dirname(__file__)
@@ -74,6 +95,8 @@ startdate = pd.to_datetime(startdate)
 enddate = pd.to_datetime(enddate)
 
 # trim data based on selected/standard dates
+df_new = df[(df['monthdt'] >= startdate) & (df['monthdt'] <= enddate) & (df.location.isin(options))]
+
 ext_melt = pd.melt(extra, 
                      id_vars=['Location', 'location', 'Date'], 
                      var_name='metric', 
@@ -86,8 +109,6 @@ ext_avg = ext_melt[(ext_melt['Date'] >= startdate) &
 ext_sum = ext_melt[(ext_melt['Date'] >= startdate) & 
                    (ext_melt['Date'] <= enddate) & 
                    (ext_melt.metric.isin(['CarsServ','EmpHours']))]
-
-df_new = df[(df['monthdt'] >= startdate) & (df['monthdt'] <= enddate) & (df.location.isin(options))]
 
 workdays = workdays[(workdays['date'] >= startdate) & 
                     (workdays['date'] <= enddate)]
@@ -211,7 +232,7 @@ st.plotly_chart(fig2)
 ######################################################
 
 
-
+row0 = st.columns(6)
 row1 = st.columns(6)
 row2 = st.columns(6)
 row3 = st.columns(6)
@@ -220,6 +241,58 @@ row5 = st.columns(6)
 row6 = st.columns(6)
 row7 = st.columns(6)
 
-for col in row1 + row2 + row3 + row4+ row5 + row6 + row7:
-    tile = col.container(height=60)
-    tile.title(":balloon:")
+# ARO	CPD  	LHPC	P-Mix %	  Big 5 %	Bay Times
+ind = [( 2, 'ARO'),( 1, 'CPD'),(51, 'LHPC'),(61, 'P-Mix %'),(62, 'Big 5 %'),(63, 'Bay Times')]
+
+last2mos = pivot_df.iloc[:,-5:-3].loc[ind,:]
+last2mos['diffs'] = last2mos.iloc[:,1].sub(last2mos.iloc[:,0], axis = 0) 
+last2mos['diffperc'] = last2mos['diffs'] / last2mos.iloc[:,0]
+last2mos = last2mos.reset_index().drop(columns=['Account_Num', 'Account'])
+last2mos.index = pd.RangeIndex(start=0, stop=len(last2mos), step=1)
+
+formatting = [
+    (0, dollar_format),
+    (1, dollar_format),
+    (2, format_two_decimals),
+    (3, perc_format),
+    (4, perc_format),
+    (5, format_two_decimals),
+]
+
+for index, func in formatting:
+    last2mos.iloc[index, 1] = func(last2mos.iloc[index, 1])
+    # last2mos.loc[index, 'values'] = last2mos[index][2]
+
+st.write(last2mos)
+cnt = 0
+for col in row0:
+    tile = col.container()#height=60)
+    tile.write(ind[cnt][1])
+    cnt += 1
+
+
+cnt = 0
+for col in row1:
+    tile = col.container(height=200)
+    tile.write(last2mos.iloc[cnt,1])
+    tile.write("All")
+    tile.write(arrow_format(last2mos.iloc[cnt]['diffperc']))
+    tile.write('(placeholder budget)')
+    cnt += 1
+
+ind = (df['monthdt'] >= enddate - pd.DateOffset(months=1)) & (df['monthdt'] <= enddate)
+df_loc = df_new[ind].groupby(['location','monthdt'])['value'].mean()#.reset_index()
+st.write(df_loc)
+    # + row2 + row3 + row4+ row5 + row6 + row7:
+    # tile = col.container(height=60)
+    # tile.title(":balloon:")
+
+
+# ind_sum = [(11, 'Revenue'),    (12, 'Gross Profit'), (25, '4-Wall EBITDA'), 
+#             (26, '4-Wall FCF'), (27, 'Net Profit'),   (71, '# of Cars Serviced')    ]
+# ind_avg = [( 1, 'CPD'),            ( 2, 'ARO'),              (21, 'Labor %'),
+#             (22, 'Controllable %'),(23, 'Uncontrollable %'), (31, 'Cash'),
+#             (41, 'Gross Profit %'),(42, '4-Wall EBITDA %'),  (43, '4-Wall FCF %'),
+#             (44, 'Net Profit %'),  (51, 'LHPC'),             (52, 'Revenue Per Employee Hours Worked'),
+#             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
+#             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]

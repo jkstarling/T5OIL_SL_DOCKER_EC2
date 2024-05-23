@@ -91,32 +91,23 @@ code removed from example here: https://docs.streamlit.io/deploy/tutorials/docke
 
 ```bash
 sudo apt update
-```
 
-
-```bash
 sudo apt-get update
-```
 
-```bash
 sudo apt upgrade -y
-```
 
-```bash
 sudo apt install git curl unzip tar make sudo vim wget -y
-```
 
-```bash
 sudo apt install git curl unzip tar make sudo vim wget -y
-```
 
-```bash
-git clone "Your-repository"
-```
-
-```bash
 sudo apt install python3-pip
 ```
+
+Make a new folder in /home called /apps. Then copy the github repo:
+```bash
+sudo git clone https://github.com/jkstarling/T5OIL_SL_DOCKER_EC2.git
+```
+
 
 ```bash
 pip3 install -r requirements.txt
@@ -136,16 +127,14 @@ Or if that doesn't work, try to install venv and start a virtual environment.
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-pip install streamlit
+pip3 install streamlit
 ```
 
 
 ```bash
 #Temporary running
 python3 -m streamlit run app.py
-```
 
-```bash
 #Permanent running
 nohup python3 -m streamlit run app.py
 ```
