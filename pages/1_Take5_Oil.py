@@ -232,6 +232,8 @@ st.plotly_chart(fig2)
 ######################################################
 
 
+####### Create BOXES Showing comparison for previous month and vs. budget for ARO, CPD, LHPC,.... 
+
 row0 = st.columns(6)
 row1 = st.columns(6)
 row2 = st.columns(6)
@@ -296,3 +298,44 @@ st.write(df_loc)
 #             (44, 'Net Profit %'),  (51, 'LHPC'),             (52, 'Revenue Per Employee Hours Worked'),
 #             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
 #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
+
+
+############################## FROM CHATGPT ##############################
+# # Assuming last2mos and ind are defined
+# # last2mos = pd.DataFrame({...})
+# # ind = [...]
+
+# # Define the number of rows and columns
+# num_rows = 8
+# num_cols = 6
+
+# # Initialize a dictionary to store the containers
+# grid = {}
+
+# # Create the grid of containers
+# for row in range(num_rows):
+#     grid[row] = st.columns(num_cols)
+
+# # Example data (you can replace this with your actual data)
+# last2mos = pd.DataFrame({
+#     'col1': ['Data11', 'Data12', 'Data13', 'Data14', 'Data15', 'Data16'],
+#     'diffperc': [10, 20, 30, 40, 50, 60]
+# })
+# ind = [['', 'Ind1'], ['', 'Ind2'], ['', 'Ind3'], ['', 'Ind4'], ['', 'Ind5'], ['', 'Ind6']]
+
+# # Fill the first row with ind data
+# for col in range(num_cols):
+#     tile = grid[0][col].container()
+#     if col < len(ind):
+#         tile.write(ind[col][1])
+
+# # Fill the second row with last2mos data and additional information
+# for col in range(num_cols):
+#     tile = grid[1][col].container()
+#     if col < len(last2mos):
+#         tile.write(last2mos.iloc[col, 1])
+#         tile.write("All")
+#         tile.write(f"DiffPerc: {last2mos.iloc[col]['diffperc']}%")
+#         tile.write('(placeholder budget)')
+
+# # You can continue to fill other rows in a similar manner
