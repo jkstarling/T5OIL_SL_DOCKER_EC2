@@ -122,8 +122,73 @@ pivot_df = T5f.create_T5_pivot_table(result_df=df_new, ext_avg=ext_avg,
                                      ext_sum=ext_sum, controlmap=controlmap,
                                      workdays=workdays)
 
-st.dataframe(pivot_df)
+###### make Gauges ################
+# Define the dictionary
+gauge_dict = {
+    "titles": ["CPD Growth % MoM", "ARO Growth % MoM", "LHPC % Change MoM", "4-Wall EBITDA Per Car % MoM",
+                "Labor /% - /% Change MoM", "Controllable Costs /%-/% Change MoM", 
+                "Uncontrollable Costs \%-\% Change MoM",
+                "Discount \%-\% Change MoM"],
+    "values": [0.25, 0.56, -0.23, 1.5, -0.99, 0.17, -0.3, 0.56],
+    "x_domain": [-1, 1],
+    "y_domain": [-1, 1]
+}
+import streamlit as st
+import plotly.graph_objects as go
 
+# Define the dictionary with 8 entries for demonstration
+# gauge_dict = {
+#     "titles": ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6", "Title7", "Title8"],
+#     "values": [10, 20, 30, 40, 50, 60, 70, 80],
+#     "x_domain": [-1, 1],
+#     "y_domain": [-1, 1]
+# }
+
+# Custom CSS to reduce whitespace
+st.markdown(
+    """
+    <style>
+    .main > div {padding: 0rem !important;}
+    .block-container {padding-top: 0rem !important; padding-bottom: 0rem !important;}
+    .css-18e3th9 {padding-top: 0rem !important; padding-bottom: 0rem !important; padding-left: 0.5rem !important; padding-right: 0.5rem !important;}
+    .css-1lcbmhc {padding-top: 0rem !important; padding-bottom: 0rem !important; padding-left: 0.5rem !important; padding-right: 0.5rem !important;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Function to create and display a column with a gauge
+def create_gauge_column(col, title, value):
+    with col:
+        # st.header(title)
+        # st.write(f"Value: {value}")
+        # st.write(f"X Domain: {gauge_dict['x_domain']}")
+        # st.write(f"Y Domain: {gauge_dict['y_domain']}")
+
+        # Create the gauge
+        fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=value,
+            domain={'x': [0, 0.25], 'y': [0, 0.25]},
+            title={'text': title}
+        ))
+
+        # Display the gauge
+        st.plotly_chart(fig)
+
+# Create the first row with 4 columns
+columns1 = st.columns(4)
+for col, title, value in zip(columns1, gauge_dict["titles"][:4], gauge_dict["values"][:4]):
+    create_gauge_column(col, title, value)
+
+# Create the second row with 4 columns
+columns2 = st.columns(4)
+for col, title, value in zip(columns2, gauge_dict["titles"][4:], gauge_dict["values"][4:]):
+    create_gauge_column(col, title, value)
+
+
+
+st.dataframe(pivot_df)
 
 # st.write('Here is the dataframe with AG GRID')
 # AgGrid(pivot_df, height=800)
