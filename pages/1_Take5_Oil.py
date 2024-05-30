@@ -116,76 +116,91 @@ ext_sum = ext_melt[(ext_melt['Date'] >= startdate) &
 workdays = workdays[(workdays['date'] >= startdate) & 
                     (workdays['date'] <= enddate)]
 
-
 #### create monthly pivot table and display. 
 pivot_df = T5f.create_T5_pivot_table(result_df=df_new, ext_avg=ext_avg, 
                                      ext_sum=ext_sum, controlmap=controlmap,
                                      workdays=workdays)
 
 ###### make Gauges ################
-# Define the dictionary
+size = "<span style='font-size:0.75em'>"
+fig = go.Figure()
 gauge_dict = {
-    "titles": ["CPD Growth % MoM", "ARO Growth % MoM", "LHPC % Change MoM", "4-Wall EBITDA Per Car % MoM",
-                "Labor /% - /% Change MoM", "Controllable Costs /%-/% Change MoM", 
-                "Uncontrollable Costs \%-\% Change MoM",
-                "Discount \%-\% Change MoM"],
-    "values": [0.25, 0.56, -0.23, 1.5, -0.99, 0.17, -0.3, 0.56],
-    "x_domain": [-1, 1],
-    "y_domain": [-1, 1]
-}
-import streamlit as st
-import plotly.graph_objects as go
+    "titles": ["CPD Growth % MoM", "ARO Growth % MoM", "LHPC % MoM", "4-Wall EBITDA/Car % MoM",
+                "Labor % MoM", "Controllable Costs % MoM", 
+                "Uncontrollable Costs % MoM",
+                "Discount % MoM"]}
 
-# Define the dictionary with 8 entries for demonstration
-# gauge_dict = {
-#     "titles": ["Title1", "Title2", "Title3", "Title4", "Title5", "Title6", "Title7", "Title8"],
-#     "values": [10, 20, 30, 40, 50, 60, 70, 80],
-#     "x_domain": [-1, 1],
-#     "y_domain": [-1, 1]
-# }
+df1 = pivot_df.loc[(1,'CPD')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][0]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 0}))
 
-# Custom CSS to reduce whitespace
-st.markdown(
-    """
-    <style>
-    .main > div {padding: 0rem !important;}
-    .block-container {padding-top: 0rem !important; padding-bottom: 0rem !important;}
-    .css-18e3th9 {padding-top: 0rem !important; padding-bottom: 0rem !important; padding-left: 0.5rem !important; padding-right: 0.5rem !important;}
-    .css-1lcbmhc {padding-top: 0rem !important; padding-bottom: 0rem !important; padding-left: 0.5rem !important; padding-right: 0.5rem !important;}
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+df1 = pivot_df.loc[(2,'ARO')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][1]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 1}))
 
-# Function to create and display a column with a gauge
-def create_gauge_column(col, title, value):
-    with col:
-        # st.header(title)
-        # st.write(f"Value: {value}")
-        # st.write(f"X Domain: {gauge_dict['x_domain']}")
-        # st.write(f"Y Domain: {gauge_dict['y_domain']}")
+df1 = pivot_df.loc[(51,'LHPC')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][2]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 2}))
 
-        # Create the gauge
-        fig = go.Figure(go.Indicator(
-            mode="gauge+number",
-            value=value,
-            domain={'x': [0, 0.25], 'y': [0, 0.25]},
-            title={'text': title}
-        ))
+df1 = pivot_df.loc[(73,'4-Wall EBITDA Per Car')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][3]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 3}))
 
-        # Display the gauge
-        st.plotly_chart(fig)
+df1 = pivot_df.loc[(21,'Labor %')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][4]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 1, 'column': 0}))
 
-# Create the first row with 4 columns
-columns1 = st.columns(4)
-for col, title, value in zip(columns1, gauge_dict["titles"][:4], gauge_dict["values"][:4]):
-    create_gauge_column(col, title, value)
+df1 = pivot_df.loc[(22,'Controllable %')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][5]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 1, 'column': 1}))
 
-# Create the second row with 4 columns
-columns2 = st.columns(4)
-for col, title, value in zip(columns2, gauge_dict["titles"][4:], gauge_dict["values"][4:]):
-    create_gauge_column(col, title, value)
+df1 = pivot_df.loc[(23,'Uncontrollable %')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][6]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 1, 'column': 2}))
 
+df1 = pivot_df.loc[(64,'Discount %')].iloc[:-3]
+min1, max1 = min(df1), max(df1)
+fig.add_trace(go.Indicator(
+    title={'text': size + gauge_dict['titles'][7]},
+    value = df1[-1],
+    delta = {'reference': df1[-2]},
+    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 1, 'column': 3}))
+
+fig.update_layout(
+    grid = {'rows': 2, 'columns': 4, 'pattern': "independent"},
+    template = {'data' : {'indicator': [{
+        'mode' : "number+delta+gauge"}]
+                         }})
+
+st.plotly_chart(fig)
 
 
 st.dataframe(pivot_df)
@@ -307,7 +322,10 @@ for col in row0:
 cnt = 0
 for col in row1:
     tile = col.container(height=box_height)
-    tile.write(last2mos.iloc[cnt,1] + arrow_form_perc(last2mos.iloc[cnt]['diffperc']))
+    if cnt in [2, 5]:
+        tile.write(last2mos.iloc[cnt,1] + arrow_form_perc_opp(last2mos.iloc[cnt]['diffperc']))
+    else: 
+        tile.write(last2mos.iloc[cnt,1] + arrow_form_perc(last2mos.iloc[cnt]['diffperc']))
     tile.write("All")
     tile.write('(budget #s)')
     cnt += 1
@@ -344,7 +362,7 @@ cpd_df.columns = cpd_df.columns.strftime('%b %y')
 cpd_df['diffs'] = cpd_df.iloc[:,1].sub(cpd_df.iloc[:,0], axis = 0) 
 cpd_df['diffperc'] = cpd_df['diffs'] / cpd_df.iloc[:,0]
 ### LHPC df
-lhpc_df = ext2_sum.pivot_table(index=['location'], columns='Date', values='CPD', aggfunc='mean')#.reset_index()
+lhpc_df = ext2_sum.pivot_table(index=['location'], columns='Date', values='LHPC', aggfunc='mean')#.reset_index()
 lhpc_df.columns = lhpc_df.columns.strftime('%b %y')
 lhpc_df['diffs'] = lhpc_df.iloc[:,1].sub(lhpc_df.iloc[:,0], axis = 0) 
 lhpc_df['diffperc'] = lhpc_df['diffs'] / lhpc_df.iloc[:,0]
@@ -396,7 +414,7 @@ for row in range(num_rows):
 #### LHPC
 for row in range(num_rows):
     tile = grid[row][2].container(height=box_height)
-    tile.write(numb_form(lhpc_df.loc[row,sec_col]) + arrow_form_num(lhpc_df.iloc[row]['diffs']))
+    tile.write(format_two_decimals(lhpc_df.loc[row,sec_col]) + arrow_form_num_opp(lhpc_df.iloc[row]['diffs']))
     tile.write(lhpc_df.loc[row,'location'])
     tile.write('(budget #s)')
 #### PMix %
@@ -414,7 +432,7 @@ for row in range(num_rows):
 #### Bay Times
 for row in range(num_rows):
     tile = grid[row][5].container(height=box_height)
-    tile.write(baytime_form(baytime_df.loc[row,sec_col]) + arrow_form_num(baytime_df.iloc[row]['diffs']))
+    tile.write(baytime_form(baytime_df.loc[row,sec_col]) + arrow_form_num_opp(baytime_df.iloc[row]['diffs']))
     tile.write(baytime_df.loc[row,'location'])
     tile.write('(budget #s)')
 

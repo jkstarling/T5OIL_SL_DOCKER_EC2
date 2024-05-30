@@ -47,6 +47,21 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     # import pandas as pd
     import numpy as np
 
+    # st.write(ext_sum)
+    # ind = (ext_sum['Date'] >= enddate - pd.DateOffset(months=1)) & (ext_sum['Date'] <= enddate)
+    ext2_sum  = ext_sum
+    ext2_sum = ext2_sum.merge(workdays, left_on='Date', right_on='date')
+    # get number of stores that are serving cars by month
+    ind = (ext2_sum.metric == 'CarsServ')  
+    n_stores_df = ext2_sum.loc[ind,:].Date.value_counts().reset_index()  # get number of stores open by month
+    ext2_sum = ext2_sum.merge(n_stores_df, left_on='Date', right_on='Date')
+    ext2_sum = ext2_sum.pivot_table(index=['location','Date','workdays','count'], columns = ['metric'], values='value', aggfunc='mean').reset_index()
+    # ext2_sum['CPD'] = (ext2_sum.CarsServ / ext2_sum.workdays) / ext2_sum['count']
+    # ext2_sum['LHPC'] = ext2_sum.EmpHours / ext2_sum.CarsServ 
+
+    # st.write(ext2_sum)
+
+
     result = result_df
     # Pivot the DataFrame by 'Month', keeping columns ('Account_Num', 'Account'), summing 'value', and filtering by 'location'
     pivot_table = result.pivot_table(index=['Account_Num', 'Account'], columns='monthdt', values='value', aggfunc='sum')
@@ -65,19 +80,20 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext_sum = ext_sum.reindex(columns=ext_sum.columns.sort_values())
     ext_sum.columns = ext_sum.columns.strftime('%b %y')
     work_pivot.columns = work_pivot.columns.strftime('%b %y')
-    # st.write('Ext.avg', ext_avg)
-    # st.write('Ext.sum', ext_sum)
-    # st.write(work_pivot)
 
-    ### 1 CPD
-    pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ', :] / work_pivot.loc['workdays', :] ,1)
+    st.write(ext_sum, work_pivot)
+    # ### 1 CPD
+    # st.write(ext2_sum.CarsServ)
+    # st.write(ext2_sum.workdays)
+    # st.write(ext2_sum['count'])
+    pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ',:] / work_pivot.loc['workdays',:], 1 )#/ ext2_sum['count'],1)
 
     ### 11  Total Income	(sum all 4000s)
     summed_values = filter_add_accounts(pivot_table, 4000, 4999)
     pivot_table.loc[(11, 'Revenue'), :] = np.round(summed_values,0)
 
      ### 2 ARO
-    pivot_table.loc[(2, 'ARO'),:] = np.round(pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['CarsServ', :],0)
+    pivot_table.loc[(2, 'ARO'),:] = np.round(pivot_table.loc[(11, 'Revenue'), :] / ext_sum.loc['CarsServ',:],0)
 
     ### 5998 Total Cost of Goods Sold	(sum all 5000s)
     summed_values = filter_add_accounts(pivot_table, 5000, 5998)

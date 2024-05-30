@@ -10,9 +10,20 @@ def arrow_form_perc(val):
     if val > -epsilon and val < epsilon:
         return '  (0%)'
     elif val > 0:
-        return f':green[  (↑ {val:.2f}%)]'
+        return f':green[ (↑ {val:.2f}%)]'
     elif val < 0:
-        return f':red[  (↓ {abs(val):.2f}%)]'
+        return f':red[ (↓ {abs(val):.2f}%)]'
+    else:
+        return '  (No data)' 
+
+def arrow_form_perc_opp(val):
+    epsilon = 0.001
+    if val > -epsilon and val < epsilon:
+        return '  (0%)'
+    elif val > 0:
+        return f':red[ (↑ {val:.2f}%)]'
+    elif val < 0:
+        return f':green[ (↓ {abs(val):.2f}%)]'
     else:
         return '  (No data)' 
 
@@ -21,11 +32,22 @@ def arrow_form_num(val):
     if val > -epsilon and val < epsilon:
         return '  (0)'
     elif val > 0:
-        return f':green[  (↑ {val:.2f})]'
+        return f':green[ (↑ {val:.2f})]'
     elif val < 0:
-        return f':red[  (↓ {abs(val):.2f})]'
+        return f':red[ (↓ {abs(val):.2f})]'
     else:
         return '  (No data)' 
+
+def arrow_form_num_opp(val):
+    epsilon = 0.001
+    if val > -epsilon and val < epsilon:
+        return '  (0)'
+    elif val < 0:
+        return f':green[ (↓ {val:.2f})]'
+    elif val > 0:
+        return f':red[ (↑ {abs(val):.2f})]'
+    else:
+        return ' (No data)' 
 
 def pmix_form(val):
     val = val * 100
@@ -77,3 +99,7 @@ def kdollar_print(mymetric, mynumb, myperc):
 def dollar_print(mymetric, mynumb, myperc):
     st.write(mymetric + arrow_form(myperc))
     st.markdown(f"<p style='font-size:30px;'>{dollar_form(mynumb)}</p>", unsafe_allow_html=True)
+
+def gauge_font(mytext):
+    print(f"<p style='font-size:30px;'>{mytext}</p>", unsafe_allow_html=True)
+    # st.markdown(f"<p style='font-size:30px;'>{mytext}</p>", unsafe_allow_html=True)
