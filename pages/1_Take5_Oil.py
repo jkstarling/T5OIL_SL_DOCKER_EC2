@@ -205,7 +205,7 @@ st.plotly_chart(fig)
 
 ## display Dataframe
 
-st.dataframe(pivot_df, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
+st.dataframe(pivot_df) #, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
 
 # st.write('Here is the dataframe with AG GRID')
 # AgGrid(pivot_df, height=800)
