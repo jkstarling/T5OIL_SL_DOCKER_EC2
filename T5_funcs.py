@@ -296,7 +296,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
 
     # st.write(d3sum_perc, d3avg_perc)
 
-    diff = final_df.loc[(12, 'Gross Profit'), :]
+    diff = final_df.loc[(12, 'Gross Profit'), :].values
     final_df.loc[(12, 'Gross Profit'), :] = diff.apply(lambda x: f'${x:,.0f}') #f'${val:,.0f}'
 
 
