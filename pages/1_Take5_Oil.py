@@ -203,6 +203,8 @@ fig.update_layout(
 st.plotly_chart(fig)
 
 
+## display Dataframe
+
 st.dataframe(pivot_df)
 
 # st.write('Here is the dataframe with AG GRID')
