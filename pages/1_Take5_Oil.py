@@ -205,14 +205,14 @@ st.plotly_chart(fig)
 
 ## display Dataframe
 
-def highlight_gross_profit(s):
-    if s['Account_Num'] == 12:  # Check if 'Account' is 'Gross Profit'
-        return [s[0]] + [f'${x:,.0f}' for x in s[1:]]  # Keep 'Account' as text, format others as currency
-    return s
-# Apply the formatting to the dataframe
-styled_df = pivot_df.style.apply(highlight_gross_profit, axis=1)
-# Display the styled dataframe in Streamlit
-st.write(styled_df)
+# def highlight_gross_profit(s):
+#     if s['Account_Num'] == 12:  # Check if 'Account' is 'Gross Profit'
+#         return [s[0]] + [f'${x:,.0f}' for x in s[1:]]  # Keep 'Account' as text, format others as currency
+#     return s
+# # Apply the formatting to the dataframe
+# styled_df = pivot_df.style.apply(highlight_gross_profit, axis=1)
+# # Display the styled dataframe in Streamlit
+# st.write(styled_df)
 
 
 st.dataframe(pivot_df) #, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
