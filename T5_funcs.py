@@ -102,8 +102,8 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ###  12  Gross Profit	5998  minus 11
     top = pivot_table.loc[(11, 'Revenue'), :]
     bot = pivot_table.loc[(5998, 'Total Cost of Goods Sold'), :]
-    val = np.round(top - bot, 0)
-    pivot_table.loc[(12, 'Gross Profit'), :] = val.apply(lambda x: f'${x:,.0f}') #f'${val:,.0f}'
+    diff = np.round(top - bot, 0)
+    pivot_table.loc[(12, 'Gross Profit'), :] = diff.apply(lambda x: f'${x:,.0f}') #f'${val:,.0f}'
 
     ### 8990  Total Expenses	(add all 6000 - 8980(inclusive))
     summed_values = filter_add_accounts(pivot_table, 6000, 8990)
