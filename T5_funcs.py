@@ -271,7 +271,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     last12avg = last12months.loc[ind_avg,:].mean(axis=1)
     last12sum.name = 'LTM'
     last12avg.name = 'LTM'
-    final_df.loc[ind_sum,'LTM'] = last12sum.apply(lambda x: f'${x:,.0f}')
+    final_df.loc[ind_sum,'LTM'] = last12sum#.apply(lambda x: f'${x:,.0f}')
     final_df.loc[ind_avg,'LTM'] = last12avg
 
     last3sum = last3months.loc[ind_sum,:].sum(axis=1)
@@ -296,7 +296,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
 
     # st.write(d3sum_perc, d3avg_perc)
 
-    diff = final_df.loc[(12, 'Gross Profit'), :].values
+    diff = final_df.loc[(12, 'Gross Profit'), :]
     final_df.loc[(12, 'Gross Profit'), :] = diff.apply(lambda x: f'${x:,.0f}') #f'${val:,.0f}'
 
 
