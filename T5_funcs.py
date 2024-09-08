@@ -305,7 +305,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     #             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
     #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
 
-    ind_dollar = [( 2, 'ARO'), (11, 'Revenue'), (12, 'Gross Profit')]#,(25, '4-Wall EBITDA'), 
+    ind_dollar = [( 2, 'ARO')] #, (11, 'Revenue'), (12, 'Gross Profit')]#,(25, '4-Wall EBITDA'), 
                 # (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
                 # (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
                 # (73, '4-Wall EBITDA Per Car')]
