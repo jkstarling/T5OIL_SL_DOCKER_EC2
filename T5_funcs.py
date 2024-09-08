@@ -296,9 +296,23 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
 
     # st.write(d3sum_perc, d3avg_perc)
 
-    # diff = final_df.loc[(12, 'Gross Profit'), :]
-    # final_df.loc[(12, 'Gross Profit'), :] = diff.apply(lambda x: f'${x:,.0f}') #f'${val:,.0f}'
-    final_df.loc[(12, 'Gross Profit'), :] = final_df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
+    ind_sum = [(11, 'Revenue'),    (12, 'Gross Profit'), (25, '4-Wall EBITDA'), 
+               (26, '4-Wall FCF'), (27, 'Net Profit'),   (71, '# of Cars Serviced')    ]
+    ind_avg = [( 1, 'CPD'),            ( 2, 'ARO'),              (21, 'Labor %'),
+                (22, 'Controllable %'),(23, 'Uncontrollable %'), (31, 'Cash'),
+                (41, 'Gross Profit %'),(42, '4-Wall EBITDA %'),  (43, '4-Wall FCF %'),
+                (44, 'Net Profit %'),  (51, 'LHPC'),             (52, 'Revenue Per Employee Hours Worked'),
+                (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
+                (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
+
+    ind_dollar = [( 2, 'ARO'), (11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
+                (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
+                (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
+                (73, '4-Wall EBITDA Per Car')]
+    for ind in ind_dollar:
+        final_df.loc[ind, :] = final_df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
+    # final_df.loc[(11, 'Revenue'), :] = final_df.loc[(11, 'Revenue'), :].apply(lambda x: f'${x:,.0f}')
+    # final_df.loc[(12, 'Gross Profit'), :] = final_df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
 
     return(final_df)
