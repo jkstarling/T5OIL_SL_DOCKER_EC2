@@ -336,14 +336,14 @@ def clean_pivot(df):
     #             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
     #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
 
-    ind_dollar = [( 2, 'ARO')] #, 
-    ind_dollar = [(11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
+    # ind_dollar = [( 2, 'ARO')] #, 
+    ind_dollar = [( 2, 'ARO'), (11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
                 (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
                 (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
                 (73, '4-Wall EBITDA Per Car')]
     for ind in ind_dollar:
         df.loc[ind, :] = df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
-    df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
+    # df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
     return df
 
