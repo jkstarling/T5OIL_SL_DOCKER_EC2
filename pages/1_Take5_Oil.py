@@ -132,15 +132,16 @@ gauge_dict = {
                 "Discount % MoM"]}
 
 df1 = pivot_df.loc[(1,'CPD')].iloc[:-3]
-st.write(df1)
-st.write(df1.pct_change())
-df1 = df1.pct_change()
+# st.write(df1)
+# st.write(df1.pct_change())
+df1 = df1.pct_change().round(3)
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
-    value = df1[-1],
-    delta = {'reference': df1[-2]},
-    gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 0}))
+    value = df1[-1] *100,
+    delta = {'reference': df1[-2] * 100},
+    number={'suffix': "%"},  # Add percentage sign
+    gauge = {'axis': {'visible': True, 'range': [min1 * 100, max1 * 100]}}, domain = {'row': 0, 'column': 0}))
 
 df1 = pivot_df.loc[(2,'ARO')].iloc[:-3]
 min1, max1 = min(df1), max(df1)
