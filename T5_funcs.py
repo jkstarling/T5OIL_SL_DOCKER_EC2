@@ -82,14 +82,14 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext_sum.columns = ext_sum.columns.strftime('%b %y')
     work_pivot.columns = work_pivot.columns.strftime('%b %y')
 
-    st.write(ext_sum, work_pivot)
+    # st.write(ext_sum, work_pivot)
     # ### 1 CPD
     # st.write(ext2_sum.CarsServ)
     # st.write(ext2_sum.workdays)
     st.write(ext2_sum['count'])
     pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ',:] / work_pivot.loc['workdays',:], 1 )
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
-    st.write(ext2_sum['count'][-n_len:])
+    # st.write(ext2_sum['count'][-n_len:])
     pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(ext2_sum['count'][-n_len:].values)
     pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([2,3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
 
@@ -320,7 +320,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     #     final_df.loc[ind, :] = final_df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
     # final_df.loc[( 2, 'ARO'), :] = final_df.loc[( 2, 'ARO'), :].apply(lambda x: f'${x:,.0f}')
     # final_df.loc[(11, 'Revenue'), :] = final_df.loc[(11, 'Revenue'), :].apply(lambda x: f'${x:,.0f}')
-    final_df.loc[(12, 'Gross Profit'), :] = final_df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
+    # final_df.loc[(12, 'Gross Profit'), :] = final_df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
 
     return(final_df)
