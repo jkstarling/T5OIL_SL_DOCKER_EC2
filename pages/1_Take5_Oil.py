@@ -69,7 +69,7 @@ extra = extra.merge(loc_df, how='left', on='Location')
 
 extra['Date'] = pd.to_datetime(extra.Date, format='%y-%b', errors='coerce')
 workdays['date'] = pd.to_datetime(workdays.date, format='%b-%y', errors='coerce')#.dt.strftime('%b %y')
-# st.write(workdays)
+st.write(workdays)
 
 # get secrets from st.secrets
 host = st.secrets["host"]#os.getenv('host') 
