@@ -146,6 +146,7 @@ st.write(df1)
 st.write(df1.pct_change())
 df1 = df1.pct_change().round(3)
 min1, max1 = min(df1), max(df1)
+st.write(min1, max1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
     value = df1[-1] *100,
