@@ -90,7 +90,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ',:] / work_pivot.loc['workdays',:], 1 )
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
     st.write(ext2_sum['count'][-n_len:])
-    pivot_table.loc[(1, 'CPD'),:] = pivot_table.loc[(1, 'CPD'),:] / ext2_sum['count'][:n_len]
+    pivot_table.loc[(1, 'CPD'),:] = pivot_table.loc[(1, 'CPD'),:] / ext2_sum['count'][-n_len:]
 
     ### 11  Total Income	(sum all 4000s)
     summed_values = filter_add_accounts(pivot_table, 4000, 4999)
