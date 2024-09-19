@@ -5,7 +5,7 @@ import os
 # load_dotenv('.env')  # take environment variables from .env.
 import datetime
 import T5_funcs as T5f
-import take5_functions as t5f
+# import take5_functions as t5f
 import pandas as pd
 import numpy as np
 import plotly.express as px
@@ -67,10 +67,10 @@ loc_df['Location'] = loc_df['Location'].astype('int64')
 
 extra = extra.merge(loc_df, how='left', on='Location')
 
-st.write(workdays)
+# st.write(workdays)
 extra['Date'] = pd.to_datetime(extra.Date, format='%y-%b', errors='coerce')
 workdays['date'] = pd.to_datetime(workdays.date, format='%y-%b', errors='coerce')#.dt.strftime('%b %y')
-st.write(workdays)
+# st.write(workdays)
 
 # get secrets from st.secrets
 host = st.secrets["host"]#os.getenv('host') 
