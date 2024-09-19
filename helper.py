@@ -73,7 +73,7 @@ def kdollar_form(val):
     return f'${val:,.2f}K'
 
 def dollar_form(val):
-    return f'${val:,.2f}'
+    return f'${val:,.0f}'
 
 def perc_form(val):
     return f'{val:.2f}%'

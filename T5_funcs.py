@@ -91,7 +91,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
     st.write(ext2_sum['count'][-n_len:])
     pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(ext2_sum['count'][-n_len:].values)
-    pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([2,3,3,4,5,5,5,6,6,6,6,6,6])
+    pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([2,3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
 
 
 
@@ -312,13 +312,13 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
 
     # ind_dollar = [( 2, 'ARO')] #, 
-    # ind_dollar = [(11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
-    #             (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
-    #             (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
-    #             (73, '4-Wall EBITDA Per Car')]
-    # for ind in ind_dollar:
-    #     final_df.loc[ind, :] = final_df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
-    # final_df.loc[( 2, 'ARO'), :] = final_df.loc[( 2, 'ARO'), :].apply(lambda x: f'${x:,.0f}')
+    ind_dollar = [(11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
+                (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
+                (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
+                (73, '4-Wall EBITDA Per Car')]
+    for ind in ind_dollar:
+        final_df.loc[ind, :] = final_df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
+    final_df.loc[( 2, 'ARO'), :] = final_df.loc[( 2, 'ARO'), :].apply(lambda x: f'${x:,.0f}')
     final_df.loc[(11, 'Revenue'), :] = final_df.loc[(11, 'Revenue'), :].apply(lambda x: f'${x:,.0f}')
     final_df.loc[(12, 'Gross Profit'), :] = final_df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
