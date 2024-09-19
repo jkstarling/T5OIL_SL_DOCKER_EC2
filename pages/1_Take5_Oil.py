@@ -132,6 +132,7 @@ gauge_dict = {
                 "Discount % MoM"]}
 
 df1 = pivot_df.loc[(1,'CPD')].iloc[:-3]
+st.write(df1)
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
