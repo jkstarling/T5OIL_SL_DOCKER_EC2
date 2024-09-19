@@ -153,7 +153,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1] *100,
     delta = {'reference': df1[-2] *100},
     number={'suffix': "%"},  # Add percentage sign
-    gauge = {'axis': {'visible': True, 'range': [min1* 100, max1* 100]}}, domain = {'row': 0, 'column': 1}))
+    gauge = {'axis': {'visible': True, 'range': [min1* 100, max1* 100]}} )) #, domain = {'row': 0, 'column': 1}))
 
 df1 = pivot_df.loc[(51,'LHPC')].iloc[:-3]
 min1, max1 = min(df1), max(df1)
