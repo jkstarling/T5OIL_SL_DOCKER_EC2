@@ -67,6 +67,7 @@ loc_df['Location'] = loc_df['Location'].astype('int64')
 
 extra = extra.merge(loc_df, how='left', on='Location')
 
+st.write(workdays)
 extra['Date'] = pd.to_datetime(extra.Date, format='%y-%b', errors='coerce')
 workdays['date'] = pd.to_datetime(workdays.date, format='%b-%y', errors='coerce')#.dt.strftime('%b %y')
 st.write(workdays)
