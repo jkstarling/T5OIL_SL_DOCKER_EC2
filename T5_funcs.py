@@ -342,7 +342,7 @@ def clean_pivot(df):
                 (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
                 (73, '4-Wall EBITDA Per Car')]
     for ind in ind_dollar:
-        df.loc[ind, :] = df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
+        df.loc[ind, :] = df.loc[ind, :-1].apply(lambda x: f'${x:,.0f}')
     # df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
     return df
