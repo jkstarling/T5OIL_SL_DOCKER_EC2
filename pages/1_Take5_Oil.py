@@ -138,7 +138,7 @@ df1 = df1.pct_change()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
-    value = df1[-1] / df1[-2],
+    value = df1[-1],
     delta = {'reference': df1[-2]},
     gauge = {'axis': {'visible': True, 'range': [min1, max1]}}, domain = {'row': 0, 'column': 0}))
 
