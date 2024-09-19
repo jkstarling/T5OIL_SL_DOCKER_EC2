@@ -343,7 +343,11 @@ def clean_pivot(df):
                 (73, '4-Wall EBITDA Per Car')]
     for ind in ind_dollar:
         # df.loc[ind, :-1] = df.loc[ind, :-1].apply(lambda x: f'${x:,.0f}')
-        df.loc[ind, :-1] = df.loc[ind, :-1].apply(lambda x: f'${x:,.0f}', axis=1)
+        # df.loc[ind, :-1] = df.loc[ind, :-1].apply(lambda x: f'${x:,.0f}', axis=1)
+        # df.iloc[ind, :-1] = df.iloc[ind, :-1].apply(lambda x: f'${x:,.0f}', axis=1)
+        df.loc[ind, df.columns[:-1]] = df.loc[ind, df.columns[:-1]].apply(lambda x: f'${x:,.0f}')
+
+
 
     # df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
