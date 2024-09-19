@@ -336,7 +336,8 @@ def clean_pivot(df):
     #             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
     #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
 
-    # ind_dollar = [( 2, 'ARO')] #, 
+    df.loc[( 1, 'CPD'), df.columns[:-1]] = df.loc[( 1, 'CPD'), df.columns[:-1]].apply(lambda x: f'${x:,.0f}')
+
     ind_dollar = [( 2, 'ARO'), (11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
                 (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
                 (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
@@ -348,6 +349,14 @@ def clean_pivot(df):
         df.loc[ind, df.columns[:-1]] = df.loc[ind, df.columns[:-1]].apply(lambda x: f'${x:,.0f}')
 
 
+    ind_perc = [(21, 'Labor %'),(22, 'Controllable %'),(23, 'Uncontrollable %'),
+            (41, 'Gross Profit %'),(42, '4-Wall EBITDA %'),  (43, '4-Wall FCF %'), 
+            (44, 'Net Profit %'),(61, 'P-Mix %'), (62, 'Big 5 %'), (63, 'Bay Times'),
+            (64, 'Discount %')]
+    for ind in ind_perc:
+        df.loc[ind, df.columns[:-1]] = df.loc[ind, df.columns[:-1]].apply(lambda x: f'{x*100:,.0f}%')
+
+    df['L3vP3 %'] = df['L3vP3 %'].apply(lambda x: f'{x*100:,.0f}%')
 
     # df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
 
