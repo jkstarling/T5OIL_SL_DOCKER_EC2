@@ -237,8 +237,9 @@ st.plotly_chart(fig)
 # # Display the styled dataframe in Streamlit
 # st.write(styled_df)
 
+pivot_df2 = T5f.clean_pivot(pivot_df)
 
-st.dataframe(pivot_df) #, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
+st.dataframe(pivot_df2) #, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
 
 # st.write('Here is the dataframe with AG GRID')
 # AgGrid(pivot_df, height=800)

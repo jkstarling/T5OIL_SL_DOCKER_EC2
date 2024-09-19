@@ -326,6 +326,29 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     return(final_df)
 
 
+def clean_pivot(df):
+    # ind_sum = [(11, 'Revenue'),    (12, 'Gross Profit'), (25, '4-Wall EBITDA'), 
+    #            (26, '4-Wall FCF'), (27, 'Net Profit'),   (71, '# of Cars Serviced')    ]
+    # ind_avg = [( 1, 'CPD'),            ( 2, 'ARO'),              (21, 'Labor %'),
+    #             (22, 'Controllable %'),(23, 'Uncontrollable %'), (31, 'Cash'),
+    #             (41, 'Gross Profit %'),(42, '4-Wall EBITDA %'),  (43, '4-Wall FCF %'),
+    #             (44, 'Net Profit %'),  (51, 'LHPC'),             (52, 'Revenue Per Employee Hours Worked'),
+    #             (61, 'P-Mix %'),       (62, 'Big 5 %'),          (63, 'Bay Times'),
+    #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
+
+    ind_dollar = [( 2, 'ARO')] #, 
+    ind_dollar = [(11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
+                (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
+                (52, 'Revenue Per Employee Hours Worked'),(72, 'Gross Profit Per Car'), 
+                (73, '4-Wall EBITDA Per Car')]
+    for ind in ind_dollar:
+        df.loc[ind, :] = df.loc[ind, :].apply(lambda x: f'${x:,.0f}')
+    df.loc[( 2, 'ARO'), :] = df.loc[( 2, 'ARO'), :].apply(lambda x: f'${x:,.0f}')
+    df.loc[(11, 'Revenue'), :] = df.loc[(11, 'Revenue'), :].apply(lambda x: f'${x:,.0f}')
+    df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
+
+    return df
+
 
 def check_password():
     """Returns `True` if the user had the correct password."""
