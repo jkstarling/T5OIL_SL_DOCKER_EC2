@@ -132,8 +132,6 @@ gauge_dict = {
                 "Discount % MoM"]}
 
 df1 = pivot_df.loc[(1,'CPD')].iloc[:-3]
-# st.write(df1)
-# st.write(df1.pct_change())
 df1 = df1.pct_change().round(3)
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
@@ -144,6 +142,8 @@ fig.add_trace(go.Indicator(
     gauge = {'axis': {'visible': True, 'range': [min1 * 100, max1 * 100]}}, domain = {'row': 0, 'column': 0}))
 
 df1 = pivot_df.loc[(2,'ARO')].iloc[:-3]
+st.write(df1)
+st.write(df1.pct_change())
 df1 = df1.pct_change().round(3)
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
