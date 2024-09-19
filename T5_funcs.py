@@ -82,7 +82,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext_sum.columns = ext_sum.columns.strftime('%b %y')
     work_pivot.columns = work_pivot.columns.strftime('%b %y')
 
-    # st.write(ext_sum, work_pivot)
+    st.write(ext_sum, work_pivot)
     # ### 1 CPD
     # st.write(ext2_sum.CarsServ)
     # st.write(ext2_sum.workdays)
