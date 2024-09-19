@@ -126,7 +126,7 @@ pivot_df = T5f.create_T5_pivot_table(result_df=df_new, ext_avg=ext_avg,
 size = "<span style='font-size:0.75em'>"
 fig = go.Figure()
 gauge_dict = {
-    "titles": ["CPD Growth % MoM", "ARO Growth % MoM", "LHPC % MoM", "4-Wall EBITDA/Car % MoM",
+    "titles": ["CPD Growth % MoM", "ARO Growth % MoM", "LHPC % MoM", "4-Wall EBITDA % MoM",
                 "Labor % MoM", "Controllable Costs % MoM", 
                 "Uncontrollable Costs % MoM",
                 "Discount % MoM"]}
@@ -167,7 +167,7 @@ fig.add_trace(go.Indicator(
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 0, 'column': 2}))
 
-df1 = pivot_df.loc[(73,'4-Wall EBITDA Per Car')].iloc[:-3]
+df1 = pivot_df.loc[(25,'4-Wall EBITDA')].iloc[:-3]
 df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
