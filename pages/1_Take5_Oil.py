@@ -159,7 +159,11 @@ min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
     value = df1[-1] *100,
-    delta = {'reference': df11[-1] },
+    delta = {
+        'reference': df11[-1]-df11[-2],  
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': " cars"    # 'prefix': "$"            
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1* 100, max1* 100]}}, domain = {'row': 0, 'column': 1}))
 
