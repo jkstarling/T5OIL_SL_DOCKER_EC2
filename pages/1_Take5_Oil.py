@@ -253,11 +253,12 @@ fig.update_layout(
         'mode' : "number+delta+gauge"}]
                          }})
 
-st.plotly_chart(fig)
-
 st.write("_<small>Note: The larger number shows the percentage change from \
         the previous month, while the smaller number represents the change \
         from the month before last.</small>_", unsafe_allow_html=True)
+        
+st.plotly_chart(fig)
+
 
 ## display Dataframe
 
