@@ -156,7 +156,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1] *100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -171,7 +171,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -185,7 +185,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -199,7 +199,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -213,7 +213,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -227,7 +227,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
@@ -241,7 +241,7 @@ fig.add_trace(go.Indicator(
     value = df1[-1]*100,
     delta = {
         'reference':  df1[-2] *100, 
-        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'valueformat': ".1f",         # Format the delta value with one decimal place
         'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign

@@ -337,6 +337,9 @@ def clean_pivot(df):
     #             (64, 'Discount %'),    (72, 'Gross Profit Per Car'), (73, '4-Wall EBITDA Per Car')]
 
     df.loc[( 1, 'CPD'), df.columns[:-1]] = df.loc[( 1, 'CPD'), df.columns[:-1]].apply(lambda x: f'{x:,.0f}')
+    df.loc[(51, 'LHPC'), df.columns[:-1]] = df.loc[(51, 'LHPC'), df.columns[:-1]].apply(lambda x: f'{x:,.2f}')
+    df.loc[(63, 'Bay Times'), df.columns[:-1]] = df.loc[(63, 'Bay Times'), df.columns[:-1]].apply(lambda x: f'{x:,.2f}')
+    df.loc[(71, '# of Cars Serviced'), df.columns[:-1]] = df.loc[(71, '# of Cars Serviced'), df.columns[:-1]].apply(lambda x: f'{x:,.0f}')
 
     ind_dollar = [( 2, 'ARO'), (11, 'Revenue'), (12, 'Gross Profit'),(25, '4-Wall EBITDA'), 
                 (26, '4-Wall FCF'), (27, 'Net Profit'),(31, 'Cash'),
