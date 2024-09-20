@@ -132,95 +132,118 @@ gauge_dict = {
                 "Discount % MoM"]}
 
 # CPD %
-df11 = pivot_df.loc[(1,'CPD')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
-myref=df11[-1]-df11[-2]
+df1 = pivot_df.loc[(1,'CPD')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
+myref=df1[-1]-df1[-2]
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
     value = df1[-1] *100,
     delta = {
-        'reference': df11[-1] * 100,  # Convert reference to percentage
+        'reference': df1[-2] * 100,  # Convert reference to percentage
         'valueformat': ".1f",         # Format the delta value with one decimal place
-        'prefix': "%"                 # Add percentage sign to the front of the reference
+        'suffix': "%"                 # Add percentage sign to the front of the reference
     },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1 * 100, max1 * 100]}}, domain = {'row': 0, 'column': 0}))
 
 # ARO %
-df11 = pivot_df.loc[(2,'ARO')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
-myref=df11[-1]-df11[-2]
+df1 = pivot_df.loc[(2,'ARO')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
     value = df1[-1] *100,
     delta = {
-        'reference':  25, # myref,  
+        'reference':  df1[-2] *100, 
         'valueformat': ".0f",         # Format the delta value with one decimal place
-        'prefix': "$"    # 'prefix': "$"            
+        'suffix': "%"               
     },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1* 100, max1* 100]}}, domain = {'row': 0, 'column': 1}))
 
 # LHPC %
-df11 = pivot_df.loc[(51,'LHPC')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(51,'LHPC')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][2]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 0, 'column': 2}))
 
-df11 = pivot_df.loc[(25,'4-Wall EBITDA')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(25,'4-Wall EBITDA')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][3]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 0, 'column': 3}))
 
-df11 = pivot_df.loc[(21,'Labor %')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(21,'Labor %')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][4]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 1, 'column': 0}))
 
-df11 = pivot_df.loc[(22,'Controllable %')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(22,'Controllable %')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][5]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 1, 'column': 1}))
 
-df11 = pivot_df.loc[(23,'Uncontrollable %')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(23,'Uncontrollable %')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][6]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 1, 'column': 2}))
 
-df11 = pivot_df.loc[(64,'Discount %')].iloc[:-3]
-df1 = df11.pct_change().round(3).dropna()
+df1 = pivot_df.loc[(64,'Discount %')].iloc[:-3]
+df1 = df1.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][7]},
     value = df1[-1]*100,
-    delta = {'reference': df11[-1]},
+    delta = {
+        'reference':  df1[-2] *100, 
+        'valueformat': ".0f",         # Format the delta value with one decimal place
+        'suffix': "%"               
+    },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1*100, max1*100]}}, domain = {'row': 1, 'column': 3}))
 
