@@ -135,10 +135,6 @@ gauge_dict = {
 df11 = pivot_df.loc[(1,'CPD')].iloc[:-3]
 df1 = df11.pct_change().round(3).dropna()
 myref=df11[-1]-df11[-2]
-st.write(df11)
-st.write(df11[-1])
-st.write(df11[-2])
-st.write(df11[-1]-df11[-2])
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
@@ -153,8 +149,8 @@ fig.add_trace(go.Indicator(
 
 # ARO %
 df11 = pivot_df.loc[(2,'ARO')].iloc[:-3]
-myref=df11[-1]-df11[-2]
 df1 = df11.pct_change().round(3).dropna()
+myref=df11[-1]-df11[-2]
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
