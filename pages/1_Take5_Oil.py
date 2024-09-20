@@ -156,7 +156,7 @@ fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
     value = df1[-1] *100,
     delta = {
-        'reference': myref,  
+        'reference':  25, # myref,  
         'valueformat': ".0f",         # Format the delta value with one decimal place
         'prefix': "$"    # 'prefix': "$"            
     },
