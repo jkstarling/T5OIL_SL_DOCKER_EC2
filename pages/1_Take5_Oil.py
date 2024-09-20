@@ -255,6 +255,9 @@ fig.update_layout(
 
 st.plotly_chart(fig)
 
+st.write("_<small>Note: The larger number shows the percentage change from \
+        the previous month, while the smaller number represents the change \
+        from the month before last.</small>_", unsafe_allow_html=True)
 
 ## display Dataframe
 
