@@ -365,8 +365,19 @@ row1 = st.columns(6)
 # ARO	CPD  	LHPC	P-Mix %	  Big 5 %	Bay Times
 ind = [( 2, 'ARO'),( 1, 'CPD'),(51, 'LHPC'),(61, 'P-Mix %'),(62, 'Big 5 %'),(63, 'Bay Times')]
 
+
+def clean_value(x):
+    if isinstance(x, str):  # Ensure it's a string
+        if '$' in x:
+            x = x.replace('$', '')  # Remove the dollar sign
+        if '%' in x:
+            x = x.replace('%', '')  # Remove the percentage sign
+            return float(x) / 100   # Divide by 100 for percentages
+    return float(x)  # Convert remaining values to float
+
 last2mos = pivot_df.iloc[:,-5:-3].loc[ind,:]
-st.write(last2mos)
+last2mos.iloc[:, -2:] = last2mos.iloc[:, -2:].applymap(clean_value)
+
 last2mos['diffs'] = last2mos.iloc[:,1].sub(last2mos.iloc[:,0], axis = 0) 
 last2mos['diffperc'] = last2mos['diffs'] / last2mos.iloc[:,0]
 last2mos = last2mos.reset_index().drop(columns=['Account_Num', 'Account'])
