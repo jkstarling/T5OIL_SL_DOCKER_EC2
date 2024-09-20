@@ -366,6 +366,7 @@ row1 = st.columns(6)
 ind = [( 2, 'ARO'),( 1, 'CPD'),(51, 'LHPC'),(61, 'P-Mix %'),(62, 'Big 5 %'),(63, 'Bay Times')]
 
 last2mos = pivot_df.iloc[:,-5:-3].loc[ind,:]
+st.write(last2mos)
 last2mos['diffs'] = last2mos.iloc[:,1].sub(last2mos.iloc[:,0], axis = 0) 
 last2mos['diffperc'] = last2mos['diffs'] / last2mos.iloc[:,0]
 last2mos = last2mos.reset_index().drop(columns=['Account_Num', 'Account'])
