@@ -408,7 +408,7 @@ for col in row1:
     else: 
         tile.write(last2mos.iloc[cnt,1] + arrow_form_perc(last2mos.iloc[cnt]['diffperc']))
     tile.write("All")
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
     cnt += 1
 
 ind = (df['monthdt'] >= enddate - pd.DateOffset(months=1)) & (df['monthdt'] <= enddate)
@@ -485,37 +485,37 @@ for row in range(num_rows):
     tile = grid[row][0].container(height=box_height)
     tile.write(dollar_form(aro_df.loc[row,sec_col]) + arrow_form_num(aro_df.iloc[row]['diffs']))
     tile.write(aro_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 #### CPD
 for row in range(num_rows):
     tile = grid[row][1].container(height=box_height)
     tile.write(numb_form(cpd_df.loc[row,sec_col]) + arrow_form_num(cpd_df.iloc[row]['diffs']))
     tile.write(cpd_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 #### LHPC
 for row in range(num_rows):
     tile = grid[row][2].container(height=box_height)
     tile.write(format_two_decimals(lhpc_df.loc[row,sec_col]) + arrow_form_num_opp(lhpc_df.iloc[row]['diffs']))
     tile.write(lhpc_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 #### PMix %
 for row in range(num_rows):
     tile = grid[row][3].container(height=box_height)
     tile.write(pmix_form(pmix_df.loc[row,sec_col]) + arrow_form_perc(pmix_df.iloc[row]['diffs']))
     tile.write(pmix_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 #### Big 5%
 for row in range(num_rows):
     tile = grid[row][4].container(height=box_height)
     tile.write(big5_form(big5_df.loc[row,sec_col]) + arrow_form_perc(big5_df.iloc[row]['diffs']))
     tile.write(big5_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 #### Bay Times
 for row in range(num_rows):
     tile = grid[row][5].container(height=box_height)
     tile.write(baytime_form(baytime_df.loc[row,sec_col]) + arrow_form_num_opp(baytime_df.iloc[row]['diffs']))
     tile.write(baytime_df.loc[row,'location'])
-    tile.write('(budget #s)')
+    # tile.write('(budget #s)')
 
 
 
