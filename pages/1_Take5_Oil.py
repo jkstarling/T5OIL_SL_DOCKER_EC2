@@ -134,6 +134,7 @@ gauge_dict = {
 # CPD %
 df11 = pivot_df.loc[(1,'CPD')].iloc[:-3]
 df1 = df11.pct_change().round(3).dropna()
+myref=df11[-1]-df11[-2]
 st.write(df11)
 st.write(df11[-1])
 st.write(df11[-2])
@@ -143,7 +144,7 @@ fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
     value = df1[-1] *100,
     delta = {
-        'reference': df11[-1]-df11[-2],  
+        'reference': myref,  
         'valueformat': ".0f",         # Format the delta value with one decimal place
         'suffix': " cars"    # 'prefix': "$"            
     },
@@ -152,19 +153,16 @@ fig.add_trace(go.Indicator(
 
 # ARO %
 df11 = pivot_df.loc[(2,'ARO')].iloc[:-3]
-st.write(df11)
-st.write(df11[-1])
-st.write(df11[-2])
-st.write(df11[-1]-df11[-2])
+myref=df11[-1]-df11[-2]
 df1 = df11.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][1]},
     value = df1[-1] *100,
     delta = {
-        'reference': df11[-1]-df11[-2],  
+        'reference': myref,  
         'valueformat': ".0f",         # Format the delta value with one decimal place
-        'suffix': " cars"    # 'prefix': "$"            
+        'prefix': "$"    # 'prefix': "$"            
     },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1* 100, max1* 100]}}, domain = {'row': 0, 'column': 1}))
