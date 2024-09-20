@@ -152,8 +152,10 @@ fig.add_trace(go.Indicator(
 
 # ARO %
 df11 = pivot_df.loc[(2,'ARO')].iloc[:-3]
-# st.write(df1)
-# st.write(df1.pct_change())
+st.write(df11)
+st.write(df11[-1])
+st.write(df11[-2])
+st.write(df11[-1]-df11[-2])
 df1 = df11.pct_change().round(3).dropna()
 min1, max1 = min(df1), max(df1)
 fig.add_trace(go.Indicator(
