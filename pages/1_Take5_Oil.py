@@ -140,9 +140,9 @@ fig.add_trace(go.Indicator(
     title={'text': size + gauge_dict['titles'][0]},
     value = df1[-1] *100,
     delta = {
-        'reference': myref,  
-        'valueformat': ".0f",         # Format the delta value with one decimal place
-        'suffix': " cars"    # 'prefix': "$"            
+        'reference': df11[-1] * 100,  # Convert reference to percentage
+        'valueformat': ".1f",         # Format the delta value with one decimal place
+        'prefix': "%"                 # Add percentage sign to the front of the reference
     },
     number={'suffix': "%"},  # Add percentage sign
     gauge = {'axis': {'visible': True, 'range': [min1 * 100, max1 * 100]}}, domain = {'row': 0, 'column': 0}))
