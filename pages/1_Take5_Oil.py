@@ -256,7 +256,7 @@ fig.update_layout(
 st.write("_<small>Note: The larger number shows the percentage change from \
         the previous month, while the smaller number represents the change \
         from the month before last.</small>_", unsafe_allow_html=True)
-        
+
 st.plotly_chart(fig)
 
 
@@ -358,7 +358,7 @@ with c2:
 
 
 ####### Create BOXES Showing comparison for previous month and vs. budget for ARO, CPD, LHPC,.... 
-box_height = 140
+box_height = 100
 
 row0 = st.columns(6)
 row1 = st.columns(6)
