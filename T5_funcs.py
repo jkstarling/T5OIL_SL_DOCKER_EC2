@@ -52,6 +52,8 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     # ind = (ext_sum['Date'] >= enddate - pd.DateOffset(months=1)) & (ext_sum['Date'] <= enddate)
     ext2_sum  = ext_sum
     ext2_sum = ext2_sum.merge(workdays, left_on='Date', right_on='date')
+    st.write('ext2sum after merging workdays on date ')
+    st.write(ext2_sum)
     # get number of stores that are serving cars by month
     ind = (ext2_sum.metric == 'CarsServ')  
     n_stores_df = ext2_sum.loc[ind,:].Date.value_counts().reset_index()  # get number of stores open by month
@@ -65,7 +67,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     pivot_table = result.pivot_table(index=['Account_Num', 'Account'], columns='monthdt', values='value', aggfunc='sum')
     ext_avg = ext_avg.pivot_table(index=['metric'], columns='Date', values='value', aggfunc='mean')
     ext_sum = ext_sum.pivot_table(index=['metric'], columns='Date', values='value', aggfunc='sum')
-    work_pivot = workdays.pivot_table( columns='date', values='workdays', aggfunc='sum')
+    work_pivot = workdays.pivot_table(columns='date', values='workdays', aggfunc='sum')
 
 
     ### change the dt to Mmmm YYYY 
