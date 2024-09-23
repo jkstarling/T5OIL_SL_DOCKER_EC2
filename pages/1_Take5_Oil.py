@@ -56,6 +56,10 @@ except: extra = pd.read_csv(cwdirup1 + '/t5_extra_data.csv', index_col=None)
 try: workdays = pd.read_csv(cwdirup1 + '\\t5_workdays.csv', index_col=None)
 except: workdays = pd.read_csv(cwdirup1 + '/t5_workdays.csv', index_col=None)
 
+try: actstores = pd.read_csv(cwdirup1 + '\\t5_activestores.csv', index_col=None)
+except: actstores = pd.read_csv(cwdirup1 + '/t5_activestores.csv', index_col=None)
+
+
 locations = [(1402,'1402 - Ten Mile'), 
             (1403, '1403 - Caldwell'), 
             (1404, '1404 - Glenwood'), 
@@ -70,6 +74,7 @@ extra = extra.merge(loc_df, how='left', on='Location')
 # st.write(workdays)
 extra['Date'] = pd.to_datetime(extra.Date, format='%y-%b', errors='coerce')
 workdays['date'] = pd.to_datetime(workdays.date, format='%y-%b', errors='coerce')#.dt.strftime('%b %y')
+actstores['date'] = pd.to_datetime(actstores.date, format='%y-%b', errors='coerce')#.dt.strftime('%b %y')
 # st.write(workdays)
 
 # get secrets from st.secrets
@@ -117,10 +122,14 @@ ext_sum = ext_melt[(ext_melt['Date'] >= startdate) &
 workdays = workdays[(workdays['date'] >= startdate) & 
                     (workdays['date'] <= enddate)]
 
+actstores = actstores[(actstores['date'] >= startdate) & 
+                    (actstores['date'] <= enddate)]
+
 #### create monthly pivot table and display. 
 pivot_df = T5f.create_T5_pivot_table(result_df=df_new, ext_avg=ext_avg, 
                                      ext_sum=ext_sum, controlmap=controlmap,
-                                     workdays=workdays)
+                                     workdays=workdays,
+                                     actstores=actstores)
 
 ###### make Gauges ################
 size = "<span style='font-size:0.75em'>"

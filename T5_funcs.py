@@ -40,7 +40,7 @@ def filter_add_accounts(df, low_n, high_n):
         return 0
 
 
-def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
+def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays, actstores):
     '''
     Takes the result dataframe and the T5 location and returns 
     a pivot dataframe across all months
@@ -60,7 +60,6 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext2_sum = ext2_sum.merge(n_stores_df, left_on='Date', right_on='Date')
     ext2_sum = ext2_sum.pivot_table(index=['location','Date','workdays','count'], columns = ['metric'], values='value', aggfunc='mean').reset_index()
 
-    st.write(n_stores_df)
 
     result = result_df
     # Pivot the DataFrame by 'Month', keeping columns ('Account_Num', 'Account'), summing 'value', and filtering by 'location'
@@ -68,7 +67,6 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext_avg = ext_avg.pivot_table(index=['metric'], columns='Date', values='value', aggfunc='mean')
     ext_sum = ext_sum.pivot_table(index=['metric'], columns='Date', values='value', aggfunc='sum')
     work_pivot = workdays.pivot_table(columns='date', values='workdays', aggfunc='sum')
-
 
     ### change the dt to Mmmm YYYY 
     # pivot_table.replace(0.0, np.nan, inplace=True)
@@ -81,14 +79,10 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays):
     ext_sum.columns = ext_sum.columns.strftime('%b %y')
     work_pivot.columns = work_pivot.columns.strftime('%b %y')
 
-    st.write(ext2_sum)
     # ### 1 CPD
-    # st.write(ext2_sum.CarsServ)
-    # st.write(ext2_sum.workdays)
-    # st.write(ext2_sum['count'])
     pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ',:] / work_pivot.loc['workdays',:], 1 )
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
-    st.write(ext2_sum['count'][-n_len:])
+    st.write(pivot_table.loc[(1, 'CPD'), :])
     # pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(ext2_sum['count'][-n_len:].values)
     pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([2,3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
 
