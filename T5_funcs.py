@@ -253,7 +253,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays, act
     final_df.sort_index(inplace=True)
 
     # create the LTM and "last three months vs prev 3 months"
-    last12months = final_df.iloc[:, -12:]
+    last12months = final_df.iloc[:, -11:]
     last3months = final_df.iloc[:, -3:]
     prev3months = final_df.iloc[:, -6:-3]
     #indices for sum/avg rows
