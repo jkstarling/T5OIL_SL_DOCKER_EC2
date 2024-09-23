@@ -52,14 +52,12 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays, act
     # ind = (ext_sum['Date'] >= enddate - pd.DateOffset(months=1)) & (ext_sum['Date'] <= enddate)
     ext2_sum  = ext_sum
     ext2_sum = ext2_sum.merge(workdays, left_on='Date', right_on='date')
-    st.write('ext2sum after merging workdays on date ')
-    st.write(ext2_sum)
+
     # get number of stores that are serving cars by month
     ind = (ext2_sum.metric == 'CarsServ')  
     n_stores_df = ext2_sum.loc[ind,:].Date.value_counts().reset_index()  # get number of stores open by month
     ext2_sum = ext2_sum.merge(n_stores_df, left_on='Date', right_on='Date')
     ext2_sum = ext2_sum.pivot_table(index=['location','Date','workdays','count'], columns = ['metric'], values='value', aggfunc='mean').reset_index()
-
 
     result = result_df
     # Pivot the DataFrame by 'Month', keeping columns ('Account_Num', 'Account'), summing 'value', and filtering by 'location'
@@ -84,7 +82,7 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays, act
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
     st.write(pivot_table.loc[(1, 'CPD'), :])
     # pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(ext2_sum['count'][-n_len:].values)
-    pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([2,3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
+    pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
 
 
 
