@@ -284,6 +284,8 @@ st.plotly_chart(fig)
 
 pivot_df2 = T5f.clean_pivot(pivot_df)
 
+pivot_df2 = pivot_df2.reset_index(level='Account_Num', drop=True)
+
 st.dataframe(pivot_df2) #, st.column_config.NumberColumn("Dollar values”, format=”$ %d"))
 
 # st.write('Here is the dataframe with AG GRID')
