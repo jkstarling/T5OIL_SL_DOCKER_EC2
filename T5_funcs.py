@@ -80,8 +80,8 @@ def create_T5_pivot_table(result_df, ext_avg, ext_sum, controlmap, workdays, act
     # ### 1 CPD
     pivot_table.loc[(1, 'CPD'),:] = np.round(ext_sum.loc['CarsServ',:] / work_pivot.loc['workdays',:], 1 )
     n_len = len(pivot_table.loc[(1, 'CPD'),:])
-    st.write(pivot_table.loc[(1, 'CPD'), :], n_len)
-    st.write(actstores['active'][-n_len:].values)
+    # st.write(pivot_table.loc[(1, 'CPD'), :], n_len)
+    # st.write(actstores['active'][-n_len:].values)
     # pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(ext2_sum['count'][-n_len:].values)
     # pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div([3,3,4,5,5,5,6,6,6,6,6,6]).round(0)
     pivot_table.loc[(1, 'CPD'), :] = pivot_table.loc[(1, 'CPD'), :].div(actstores['active'][-n_len:].values).round(0)

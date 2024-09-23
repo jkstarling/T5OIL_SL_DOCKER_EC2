@@ -93,7 +93,7 @@ df = df.loc[(df.location != 'Admin') & (df.location != 'Not Specified') & (df.lo
 
 #### get data within dates. Baseline is 13 months.
 maxdate = max(df.monthdt)
-st.write(maxdate)
+# st.write(maxdate)
 
 mindate = maxdate - pd.DateOffset(months=12)
 
