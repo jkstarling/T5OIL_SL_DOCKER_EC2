@@ -496,7 +496,6 @@ for row in range(num_rows):
 for row in range(num_rows):
     try:
         tile = grid[row][0].container(height=box_height)
-        st.write(aro_df)
         tile.write(dollar_form(aro_df.loc[row,sec_col]) + arrow_form_num(aro_df.iloc[row]['diffs']))
         tile.write(aro_df.loc[row,'location'])
     except:
