@@ -355,7 +355,7 @@ def clean_pivot(df):
 
     # df.loc[(12, 'Gross Profit'), :] = df.loc[(12, 'Gross Profit'), :].apply(lambda x: f'${x:,.0f}')
     df.replace(np.nan, '', inplace=True)
-    df.drop(['Account_Num'], inplace=True)
+    df = df.drop(['Account_Num'], axis = 1)
     return df
 
 
