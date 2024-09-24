@@ -553,31 +553,31 @@ for row in range(num_rows):
 
 
 
-# ### Test Area
-# st.markdown("### Test Area - Future Improvements")
-# ############################# Trend line test (linear)
-# # Prepare data for forecasting
-# df_grouped = ext_cars_by_loc.groupby('Date').sum().reset_index()
-# # Forecast for the next 3 months
-# future_dates = pd.date_range(start=df_grouped['Date'].max() + pd.DateOffset(months=1), periods=3, freq='M')
-# # Linear Regression Model for forecasting
-# X = np.arange(len(df_grouped)).reshape(-1, 1)
-# y = df_grouped['value']
-# model = LinearRegression()
-# model.fit(X, y)
-# # Predict the next 3 months
-# X_future = np.arange(len(df_grouped), len(df_grouped) + 3).reshape(-1, 1)
-# y_future = model.predict(X_future)
-# # Create a DataFrame for forecasted values
-# forecast_df = pd.DataFrame({
-#     'Date': future_dates,
-#     'value': y_future
-# })
-# # Combine the original and forecasted DataFrames
-# combined_df = pd.concat([df_grouped, forecast_df])
-# # Plotting
-# fig2 = px.bar(ext_cars_by_loc, x='Date', y='value', color='location', title="Cars Serviced by Location (w/linear regression trendline)")
-# # Adding the forecasted values as a line
-# fig2.add_scatter(x=combined_df['Date'], y=combined_df['value'], mode='lines', name='Trend Line')
-# st.plotly_chart(fig2)
-# ######################################################
+### Test Area
+st.markdown("### Test Area - Future Improvements")
+############################# Trend line test (linear)
+# Prepare data for forecasting
+df_grouped = ext_cars_by_loc.groupby('Date').sum().reset_index()
+# Forecast for the next 3 months
+future_dates = pd.date_range(start=df_grouped['Date'].max() + pd.DateOffset(months=1), periods=3, freq='M')
+# Linear Regression Model for forecasting
+X = np.arange(len(df_grouped)).reshape(-1, 1)
+y = df_grouped['value']
+model = LinearRegression()
+model.fit(X, y)
+# Predict the next 3 months
+X_future = np.arange(len(df_grouped), len(df_grouped) + 3).reshape(-1, 1)
+y_future = model.predict(X_future)
+# Create a DataFrame for forecasted values
+forecast_df = pd.DataFrame({
+    'Date': future_dates,
+    'value': y_future
+})
+# Combine the original and forecasted DataFrames
+combined_df = pd.concat([df_grouped, forecast_df])
+# Plotting
+fig2 = px.bar(ext_cars_by_loc, x='Date', y='value', color='location', title="Cars Serviced by Location (w/linear regression trendline)")
+# Adding the forecasted values as a line
+fig2.add_scatter(x=combined_df['Date'], y=combined_df['value'], mode='lines', name='Trend Line')
+st.plotly_chart(fig2)
+######################################################
