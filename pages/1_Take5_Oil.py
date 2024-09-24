@@ -554,7 +554,7 @@ for row in range(num_rows):
 
 
 ### Test Area
-st.markdown("### Test Area - Future Improvements")
+st.markdown("### Linear Forecast Model")
 ############################# Trend line test (linear)
 # Prepare data for forecasting
 df_grouped = ext_cars_by_loc.groupby('Date').sum().reset_index()
